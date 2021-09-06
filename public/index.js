@@ -5,11 +5,11 @@ function calculatePrice() {
   let inputString=[];
   for(let i in itemInfo)
   {
-    let id='input'+i;
+    let id=`input${i}`;
     let num = document.getElementById(id).value;
     if(num>0)
     {
-      let Str=itemInfo[i].id+' x '+num;
+      let Str=`${itemInfo[i].id} x ${num}`;
       inputString.push(Str);
     }
   }
@@ -19,7 +19,7 @@ function calculatePrice() {
 
 function Clear() {
   for (let i in itemInfo) {
-    let id = 'input' + i;
+    let id = `input${i}`;
     document.getElementById(id).value = '0';
     document.getElementById("message").innerHTML ='/* 请将结算后产生的汇总字符串显示在这里 */';
   }

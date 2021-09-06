@@ -49,7 +49,7 @@ function CalcCost(itemJson){
   let cost2NameArray=[];
   for(let j in itemJson)
   {
-    if(Promotion[1].items.indexOf(itemJson[j].id)>=0)
+    if(Promotion[1].items.includes(itemJson[j].id))
     {
       cost2NameArray.push(itemJson[j].name); //记录打折菜品名称
       cost2+=(itemJson[j].price/2*itemJson[j].num);
@@ -59,15 +59,15 @@ function CalcCost(itemJson){
     { cost2+=itemJson[j].price*itemJson[j].num;}
   }
 
-  let cost1String = Promotion[0].type+'，省6元';
-  let cost2String=Promotion[1].type+'(';
+  let cost1String = `${Promotion[0].type}，省6元`;
+  let cost2String=`${Promotion[1].type}(`;
 
   for(let i in cost2NameArray)
   {
-    cost2String+=cost2NameArray[i]+'，';
+    cost2String+=`${cost2NameArray[i]}，`;
   }
   cost2String=cost2String.substr(0, cost2String.length - 1);
-  cost2String+=')，省'+ cost2Discount.toString()+'元';
+  cost2String+=`)，省${cost2Discount.toString()}元`;
 
   let costJson={};
   costJson.string='';
@@ -89,22 +89,22 @@ function CalcCost(itemJson){
   return costJson;
 }
 
-function PrintResult(itemJson,costJson){
+function PrintResult(itemJson, {string, cost}) {
   let resultString='';
   resultString+='============= 订餐明细 =============\n';
   for(let i in itemJson)
   {
-    let Str=itemJson[i].name+' x '+itemJson[i].num+' = '+itemJson[i].num*itemJson[i].price+'元\n';
+    let Str=`${itemJson[i].name} x ${itemJson[i].num} = ${itemJson[i].num*itemJson[i].price}元\n`;
     resultString+=Str;
   }
   resultString+='-----------------------------------\n';
-  if(costJson.string!='')
+  if(string!='')
   {
     resultString+='使用优惠:\n';
-    resultString+=costJson.string+'\n';
+    resultString+=`${string}\n`;
     resultString+='-----------------------------------\n';
   }
-  resultString+='总计：'+costJson.cost+'元'+'\n';
+  resultString+=`总计：${cost}元\n`;
   resultString+='===================================';
   return resultString;
 }
